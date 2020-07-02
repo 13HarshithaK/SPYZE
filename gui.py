@@ -1,0 +1,78 @@
+from tkinter import *
+r = Tk()
+r.config(height=600, width=500)
+r.title('SPYZE')
+import create_database
+import face_rec
+import Recognition
+import em2
+names={}
+def update_btn_text():
+    butt2.config(state=NORMAL)
+    v1.set("Your system is disarmed")
+    butt1.config(state=DISABLED)
+
+def update_btn_text2():
+    butt1.config(state=NORMAL)
+    v1.set("Your system is armed")
+    print(butt1['state'])
+    print("rec wcalled")
+    #while butt1['state']== 'normal':
+    print("entered loop")
+    x=Recognition.eigrec(names)
+    print(x)
+    em2.eml(x)
+    print("lopoexit")
+    butt2.config(state=DISABLED)
+
+def tra():
+    a=e1.get()
+    global names
+    create_database.mainfunc(a)
+    print(names)
+    em2.eml("new person added")
+    names=face_rec.eigentrn()
+    print (names)
+    print("trsined")
+
+names=face_rec.eigentrn()
+print (names)
+print("trained")
+lab1=Label(r, text='WELCOME TO SPYZE')
+lab1.config(font=("Courier",50))
+lab1.grid(row=0,columnspan=2)
+v1=StringVar()
+lab2=Label(r, textvariable=v1)
+v1.set("Your system is disarmed")
+lab2.config(font=("Fixedsys", 20))
+lab2.grid(row=2)
+Label(r, text=' ').grid(row=3,columnspan=2)
+print("1")
+butt1_t=StringVar()
+butt1=Button(r, textvariable=butt1_t, command=update_btn_text)
+butt1_t.set("Disarm")
+butt1.config(height = 2, width = 40)
+butt1.config(font=("Courier"))
+butt1.grid(row=4, column=0)
+butt1.config(state=DISABLED)
+print("2")
+butt2_t=StringVar()
+butt2=Button(r, textvariable=butt2_t, command=update_btn_text2)
+butt2_t.set("Arm")
+butt2.config(height = 2, width = 40)
+butt2.config(font=("Courier"))
+butt2.grid(row=4, column=1)
+print("3")
+Label(r, text=' ').grid(row=5)
+butt3=Button(r, text='Add new person', command=tra)
+butt3.config(font=("Courier"))
+butt3.config(height = 2, width = 40)
+butt3.grid(row=6, column=1)
+print("4")
+e1=Entry(r)
+e1.grid(row=6)
+e1.config(width = 40 )
+e1.config(font=("Courier",12))
+print("5")
+r.mainloop()
+print("6")
